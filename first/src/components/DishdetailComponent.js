@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom';
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import { Loading } from './LoadingComponent';
 import { baseUrl } from '../shared/baseUrl';
+import { FadeTransform, Fade, Stagger } from 'react-animation-components';
 
 
 const required = (val) => val && val.length;
@@ -105,6 +106,11 @@ class CommentForm extends Component{
 function RenderDish({dish}) {
     
   return(
+    <FadeTransform
+                in
+                transformProps={{
+                    exitTransform: 'scale(0.5) translateY(-50%)'
+                }}>
     <Card>
       <CardImg top src={baseUrl + dish.image} alt={dish.name}  />
       <CardBody>
@@ -112,6 +118,7 @@ function RenderDish({dish}) {
         <CardText>{dish.description} <p>Price {dish.price} $</p></CardText>
       </CardBody>
     </Card>
+    </FadeTransform>
  
   );
 };
@@ -129,7 +136,7 @@ function RenderComments({comments, postComment, dishId}){
 </>
   );
   return (
-    <ul>{commentList}
+    <ul> <Stagger in>{commentList}</Stagger> 
 
     <CommentForm dishId={dishId} postComment={postComment}/></ul>
   );
